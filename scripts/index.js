@@ -1,7 +1,7 @@
 const placesList = document.querySelector(".places__list");
 
 function deleteCard(e) {
-  const card = e.target.closest("li");
+  const card = e.target.parentElement;
   card.remove();
 }
 
