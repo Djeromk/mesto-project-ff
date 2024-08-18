@@ -12,7 +12,7 @@ import {
 const placesList = document.querySelector(".places__list");
 const profileEditBtn = document.querySelector(".profile__edit-button");
 const profileAddBtn = document.querySelector(".profile__add-button");
-const popup = document.querySelectorAll(".popup");
+const popupWindow = document.querySelectorAll(".popup");
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup_type_image");
@@ -22,7 +22,7 @@ const formElement = document.querySelector('form[name = "edit-profile"]');
 const formImgElement = document.querySelector('form[name = "new-place"]');
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
-const closePopup = document.querySelectorAll(".popup__close");
+const closePopupButtons = document.querySelectorAll(".popup__close");
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const cardInputName = document.querySelector(".popup__input_type_card-name");
@@ -38,7 +38,7 @@ function handleFormSubmit(evt) {
     placesList.prepend(
       createCard(cardData, deleteCard, likeCard, OpenImagePopup)
     );
-    closeModal(popup);
+    closeModal(popupWindow);
     cardInputName.value = "";
     cardInputUrl.value = "";
     return;
@@ -47,7 +47,7 @@ function handleFormSubmit(evt) {
   profileDescription.textContent = jobInput.value;
   nameInput.value = "";
   jobInput.value = "";
-  closeModal(popup);
+  closeModal(popupWindow);
 }
 
 function OpenImagePopup(e) {
@@ -77,6 +77,6 @@ profileAddBtn.addEventListener("click", () => openModal(popupNewCard));
 formElement.addEventListener("submit", handleFormSubmit);
 formImgElement.addEventListener("submit", handleFormSubmit);
 
-closeOnEsc(popup);
-closeOnClick(closePopup, popup);
-closeOnOverlay(popup);
+closeOnEsc(popupWindow);
+closeOnClick(closePopupButtons, popupWindow);
+closeOnOverlay(popupWindow);
