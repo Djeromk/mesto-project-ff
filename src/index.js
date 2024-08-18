@@ -50,6 +50,15 @@ function handleFormSubmit(evt) {
   closeModal(popup);
 }
 
+function OpenImagePopup(e) {
+  e.preventDefault();
+  ImageSrc.src = e.target.src;
+  ImageText.innerHTML = e.target
+    .closest(".card")
+    .querySelector(".card__title").textContent;
+  openModal(popupImage);
+}
+
 initialCards.forEach((card) => {
   const cardElement = createCard(
     card,
@@ -61,16 +70,9 @@ initialCards.forEach((card) => {
   placesList.append(cardElement);
 });
 
-function OpenImagePopup(e) {
-  e.preventDefault();
-  ImageSrc.src = e.target.src;
-  ImageText.innerHTML = e.target
-    .closest(".card")
-    .querySelector(".card__title").textContent;
-  openModal(popupImage);
-}
-
-profileEditBtn.addEventListener("click", () => openModal(popupEdit));
+profileEditBtn.addEventListener("click", () =>
+  openModal(popupEdit, profileName, profileDescription)
+);
 profileAddBtn.addEventListener("click", () => openModal(popupNewCard));
 formElement.addEventListener("submit", handleFormSubmit);
 formImgElement.addEventListener("submit", handleFormSubmit);

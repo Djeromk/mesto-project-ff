@@ -1,13 +1,14 @@
-function openModal(popup) {
+function openModal(popup, profileName, profileDescription) {
+  if (popup.classList.contains("popup_type_edit")) {
+    popup.querySelector("form").name.value = profileName.textContent;
+    popup.querySelector("form").description.value =
+      profileDescription.textContent;
+  }
   popup.classList.add("popup_is-opened");
 }
 
 function closeModal(popup) {
   popup.forEach((item) => {
-    let inputField = item.querySelectorAll("input");
-    inputField.forEach((input) => {
-      input.value = "";
-    });
     item.classList.remove("popup_is-opened");
   });
 }

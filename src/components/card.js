@@ -12,7 +12,6 @@ function createCard(cardData, deleteCard, likeCard, openCardPopup) {
   cardImage.addEventListener("click", openCardPopup);
   removeButton.addEventListener("click", deleteCard);
   likeButton.addEventListener("click", likeCard);
-  console.log(cardItem);
   return cardItem;
 }
 
