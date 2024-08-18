@@ -25,5 +25,5 @@
     }
 ];
 
-export {initialCards}
+export { initialCards }
 
