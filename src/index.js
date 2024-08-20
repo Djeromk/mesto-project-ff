@@ -6,19 +6,18 @@ import {
   closeModal,
   closeOnOverlay,
   closeOnClick,
-  closeOnEsc,
 } from "./components/modal.js";
 
 const placesList = document.querySelector(".places__list");
 const profileEditBtn = document.querySelector(".profile__edit-button");
 const profileAddBtn = document.querySelector(".profile__add-button");
-const popupWindow = document.querySelectorAll(".popup");
+const popupWindows = document.querySelectorAll(".popup");
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup_type_image");
-const ImageSrc = document.querySelector(".popup_type_image .popup__image");
-const ImageText = document.querySelector(".popup_type_image .popup__caption");
-const formElement = document.querySelector('form[name = "edit-profile"]');
+const imageSrc = document.querySelector(".popup_type_image .popup__image");
+const imageText = document.querySelector(".popup_type_image .popup__caption");
+const profileForm = document.querySelector('form[name = "edit-profile"]');
 const formImgElement = document.querySelector('form[name = "new-place"]');
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
@@ -28,55 +27,63 @@ const profileDescription = document.querySelector(".profile__description");
 const cardInputName = document.querySelector(".popup__input_type_card-name");
 const cardInputUrl = document.querySelector(".popup__input_type_url");
 
-function handleFormSubmit(evt) {
+function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  if (evt.currentTarget.getAttribute("name") === "new-place") {
-    const cardData = {
-      name: cardInputName.value,
-      link: cardInputUrl.value,
-    };
-    placesList.prepend(
-      createCard(cardData, deleteCard, likeCard, OpenImagePopup)
-    );
-    closeModal(popupWindow);
-    cardInputName.value = "";
-    cardInputUrl.value = "";
-    return;
-  }
-  profileName.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  nameInput.value = "";
-  jobInput.value = "";
-  closeModal(popupWindow);
+  const card = {
+    name: cardInputName.value,
+    link: cardInputUrl.value,
+  };
+  renderCard(card, "prepend");
+  closeModal();
+  evt.target.reset();
+  return;
 }
 
-function OpenImagePopup(e) {
+function renderCard(item, method = "prepend") {
+  const cardElement = createCard(item, {
+    deleteCard,
+    likeCard,
+    openImagePopup,
+  });
+  placesList[method](cardElement);
+}
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+  closeModal();
+}
+
+function openImagePopup(e) {
   e.preventDefault();
-  ImageSrc.src = e.target.src;
-  ImageText.innerHTML = e.target
+  console.log(e.target);
+  imageSrc.src = e.target.src;
+  imageSrc.alt = e.target.alt;
+  imageText.textContent = e.target
     .closest(".card")
     .querySelector(".card__title").textContent;
   openModal(popupImage);
 }
 
 initialCards.forEach((card) => {
-  const cardElement = createCard(
-    card,
+  const cardElement = createCard(card, {
     deleteCard,
     likeCard,
-    OpenImagePopup,
-    false
-  );
+    openImagePopup,
+  });
   placesList.append(cardElement);
 });
 
-profileEditBtn.addEventListener("click", () =>
-  openModal(popupEdit, profileName, profileDescription)
-);
+profileEditBtn.addEventListener("click", () => {
+  popupEdit.querySelector("form").name.value = profileName.textContent;
+  popupEdit.querySelector("form").description.value =
+    profileDescription.textContent;
+  openModal(popupEdit, profileName, profileDescription);
+});
 profileAddBtn.addEventListener("click", () => openModal(popupNewCard));
-formElement.addEventListener("submit", handleFormSubmit);
-formImgElement.addEventListener("submit", handleFormSubmit);
+profileForm.addEventListener("submit", handleProfileFormSubmit);
+formImgElement.addEventListener("submit", handleCardFormSubmit);
 
-closeOnEsc(popupWindow);
-closeOnClick(closePopupButtons, popupWindow);
-closeOnOverlay(popupWindow);
+closeOnClick(closePopupButtons);
+closeOnOverlay(popupWindows);

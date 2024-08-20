@@ -1,38 +1,34 @@
-function openModal(popup, profileName, profileDescription) {
-  if (popup.classList.contains("popup_type_edit")) {
-    popup.querySelector("form").name.value = profileName.textContent;
-    popup.querySelector("form").description.value =
-      profileDescription.textContent;
-  }
+function openModal(popup) {
   popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", handleEscape);
 }
 
-function closeModal(popup) {
-  popup.forEach((item) => {
-    item.classList.remove("popup_is-opened");
-  });
+function closeModal() {
+  const openedPopup = document.querySelector(".popup_is-opened");
+  openedPopup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", handleEscape);
 }
 
 function closeOnOverlay(popup) {
-  popup.forEach((popupCard) => {
-    popupCard.addEventListener("click", (event) => {
-      if (event.target === popupCard) {
-        closeModal(popup);
+  popup.forEach((modal) => {
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal();
       }
     });
   });
 }
 
-function closeOnClick(closePopup, popup) {
-  closePopup.forEach((item) => {
-    item.addEventListener("click", () => closeModal(popup));
+function closeOnClick(closePopupButtons) {
+  closePopupButtons.forEach((item) => {
+    item.addEventListener("click", () => closeModal());
   });
 }
 
-function closeOnEsc(popup) {
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal(popup);
-  });
+function handleEscape(evt) {
+  if (evt.key === "Escape") {
+    closeModal();
+  }
 }
 
-export { openModal, closeModal, closeOnOverlay, closeOnClick, closeOnEsc };
+export { openModal, closeModal, closeOnOverlay, closeOnClick };
