@@ -33,7 +33,7 @@ function handleCardFormSubmit(evt) {
     name: cardInputName.value,
     link: cardInputUrl.value,
   };
-  renderCard(card, "prepend");
+  renderCard(card);
   closeModal();
   evt.target.reset();
   return;
@@ -57,7 +57,6 @@ function handleProfileFormSubmit(evt) {
 
 function openImagePopup(e) {
   e.preventDefault();
-  console.log(e.target);
   imageSrc.src = e.target.src;
   imageSrc.alt = e.target.alt;
   imageText.textContent = e.target
@@ -67,12 +66,7 @@ function openImagePopup(e) {
 }
 
 initialCards.forEach((card) => {
-  const cardElement = createCard(card, {
-    deleteCard,
-    likeCard,
-    openImagePopup,
-  });
-  placesList.append(cardElement);
+  renderCard(card, "append");
 });
 
 profileEditBtn.addEventListener("click", () => {

@@ -5,12 +5,14 @@ function openModal(popup) {
 
 function closeModal() {
   const openedPopup = document.querySelector(".popup_is-opened");
-  openedPopup.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", handleEscape);
+  if (openedPopup) {
+    openedPopup.classList.remove("popup_is-opened");
+    document.removeEventListener("keydown", handleEscape);
+  }
 }
 
-function closeOnOverlay(popup) {
-  popup.forEach((modal) => {
+function closeOnOverlay(popups) {
+  popups.forEach((modal) => {
     modal.addEventListener("click", (event) => {
       if (event.target === modal) {
         closeModal();
@@ -21,7 +23,7 @@ function closeOnOverlay(popup) {
 
 function closeOnClick(closePopupButtons) {
   closePopupButtons.forEach((item) => {
-    item.addEventListener("click", () => closeModal());
+    item.addEventListener("click", closeModal);
   });
 }
 
