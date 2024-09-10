@@ -25,3 +25,14 @@
     line-height: 17px;
   }
 }
+
+.popup__button_disabled {
+  color: #B8B8B8;
+  background: transparent;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid #b8b8b8;
+}
