@@ -31,5 +31,7 @@
    npm run dev
    ```
 
-
+## Ссылка на GitHub Pages
+[https://djeromk.github.io/mesto-project-ff/](https://djeromk.github.io/mesto-project-ff/)
+## Ссылка на проект
 [https://github.com/Djeromk/mesto-project-ff.git](https://github.com/Djeromk/mesto-project-ff.git)
