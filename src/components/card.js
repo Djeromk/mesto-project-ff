@@ -1,19 +1,6 @@
 import { openModal, closeModal } from "./modal";
 import { deleteCardById, putLike, deleteLike } from "./api";
 
-// cardData = {
-//"_id": "66da09728318c905b35f88cc",
-//"name": "Пятигорск",
-//"link": "https://avatars.mds.yandex.net/i?id=1b1a25f9ddaa1442b29a2fe9bea232f36f5378ed-7593536-images-thumbs&n=13",
-//"owner": {
-//    "name": "Olga M",
-//    "about": "JS researcher",
-//    "avatar": "https://static.tildacdn.com/tild3664-3638-4339-b262-613335303339/image15.png",
-//    "_id": "18224dc979a1237fbf3f98ed",
-//    "cohort": "wff-cohort-22"
-//},
-//}
-
 function createCard(cardData, cardFunctions, currentUser) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
