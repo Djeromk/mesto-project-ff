@@ -19,44 +19,38 @@ import {
   postCard,
   patchUserAvatar,
 } from "./components/api.js";
+import {
+  placesList,
+  profileEditBtn,
+  profileAddBtn,
+  popupWindows,
+  popupEdit,
+  popupNewCard,
+  popupImage,
+  imageSrc,
+  imageText,
+  profileForm,
+  formImgElement,
+  formAvatarElement,
+  nameInput,
+  jobInput,
+  closePopupButtons,
+  profileName,
+  profileDescription,
+  cardInputName,
+  cardInputUrl,
+  profileImage,
+  popupAvatar,
+  loader,
+  popupEditSubmitButton,
+  popupNewCardSubmitButton,
+  popupAvatarSubmitButton,
+  deleteCardPopup,
+  deleteConfirmButton,
+  validationSettings,
+} from "./components/constants.js";
 
-const placesList = document.querySelector(".places__list");
-const profileEditBtn = document.querySelector(".profile__edit-button");
-const profileAddBtn = document.querySelector(".profile__add-button");
-const popupWindows = document.querySelectorAll(".popup");
-const popupEdit = document.querySelector(".popup_type_edit");
-const popupNewCard = document.querySelector(".popup_type_new-card");
-const popupImage = document.querySelector(".popup_type_image");
-const imageSrc = document.querySelector(".popup_type_image .popup__image");
-const imageText = document.querySelector(".popup_type_image .popup__caption");
-const profileForm = document.querySelector('form[name = "edit-profile"]');
-const formImgElement = document.querySelector('form[name = "new-place"]');
-const formAvatarElement = document.querySelector('form[name = "edit-avatar"]');
-const nameInput = document.querySelector(".popup__input_type_name");
-const jobInput = document.querySelector(".popup__input_type_description");
-const closePopupButtons = document.querySelectorAll(".popup__close");
-const profileName = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-const cardInputName = document.querySelector(".popup__input_type_card-name");
-const cardInputUrl = document.querySelector(".popup__input_type_url");
-const profileImage = document.querySelector(".profile__image");
-const popupAvatar = document.querySelector(".popup_type_avatar");
-const loader = document.querySelector(".loader");
-const popupEditSubmitButton = popupEdit.querySelector(".popup__button");
-const popupNewCardSubmitButton = popupNewCard.querySelector(".popup__button");
-const popupAvatarSubmitButton = popupAvatar.querySelector(".popup__button");
-const deleteCardPopup = document.querySelector(".popup_type_delete-card");
-const deleteConfirmButton = deleteCardPopup.querySelector(".button");
 let currentUser;
-const validationSettings = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
 renderLoadingScreen(true);
 
 function handleCardFormSubmit(evt) {
