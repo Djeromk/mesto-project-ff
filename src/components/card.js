@@ -1,8 +1,12 @@
-import { openModal, closeModal } from "./modal";
+import { openModal } from "./modal";
 import { deleteCardById, putLike, deleteLike } from "./api";
 
+let cardToDeleteId = null;
+let cardToDeleteElement = null;
+const deleteCardPopup = document.querySelector(".popup_type_delete-card");
+const cardTemplate = document.querySelector("#card-template").content;
+
 function createCard(cardData, cardFunctions, currentUser) {
-  const cardTemplate = document.querySelector("#card-template").content;
   const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
   const removeButton = cardItem.querySelector(".card__delete-button");
   const likeButton = cardItem.querySelector(".card__like-button");
@@ -18,7 +22,9 @@ function createCard(cardData, cardFunctions, currentUser) {
   }
   if (cardData.owner._id === currentUser._id) {
     removeButton.addEventListener("click", () => {
-      cardFunctions.deleteCard(cardItem, cardData._id);
+      cardToDeleteId = cardData._id;
+      cardToDeleteElement = cardItem;
+      openModal(deleteCardPopup);
     });
   } else {
     removeButton.remove();
@@ -30,28 +36,16 @@ function createCard(cardData, cardFunctions, currentUser) {
   return cardItem;
 }
 
-function deleteCard(cardElement, cardId) {
-  const deleteCardPopup = document.querySelector(".popup_type_delete-card");
-  const deleteConfirmButton = deleteCardPopup.querySelector(".button");
-
-  function handleDeleteConfirm() {
-    deleteConfirmButton.textContent = "Удаление...";
-    deleteCardById(cardId)
-      .then(() => {
-        cardElement.remove();
-        closeModal(deleteCardPopup);
-        deleteConfirmButton.textContent = "Да";
-      })
-      .catch((err) => {
-        console.error("Ошибка при удалении карточки:", err);
-      })
-      .finally(() => {
-        deleteConfirmButton.removeEventListener("click", handleDeleteConfirm);
-      });
-  }
-
-  deleteConfirmButton.addEventListener("click", handleDeleteConfirm);
-  openModal(deleteCardPopup);
+function deleteCard(cardId) {
+  return deleteCardById(cardId)
+    .then(() => {
+      if (cardToDeleteElement) {
+        cardToDeleteElement.remove();
+      }
+    })
+    .catch((err) => {
+      console.error("Ошибка при удалении карточки:", err);
+    });
 }
 
 function likeCard(cardId, event) {
@@ -79,4 +73,4 @@ function likeCard(cardId, event) {
   }
 }
 
-export { createCard, deleteCard, likeCard };
+export { createCard, deleteCard, likeCard, cardToDeleteId };

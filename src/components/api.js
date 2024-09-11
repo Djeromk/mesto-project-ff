@@ -6,26 +6,25 @@ const config = {
   },
 };
 
+function handleResponse(res) {
+  if (res.ok) return res.json();
+  else return Promise.reject(res.status);
+}
+
 function getCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: {
       authorization: config.headers.authorization,
     },
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
-function getUsers() {
+function getUser() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: {
       authorization: config.headers.authorization,
     },
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 function patchUserProfile(user) {
@@ -37,11 +36,7 @@ function patchUserProfile(user) {
       about: user.about,
     }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else return Promise.reject(res.status);
-    })
+    .then(handleResponse)
     .then((data) => {
       return data;
     });
@@ -54,10 +49,7 @@ function patchUserAvatar(avatar) {
     body: JSON.stringify({
       avatar: avatar.link,
     }),
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 function postCard(card) {
@@ -68,46 +60,33 @@ function postCard(card) {
       name: card.name,
       link: card.link,
     }),
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 function deleteCardById(cardId) {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 function putLike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 function deleteLike(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) return res.json();
-    else return Promise.reject(res.status);
-  });
+  }).then(handleResponse);
 }
 
 export {
   getCards,
-  getUsers,
+  getUser,
   patchUserProfile,
   postCard,
   deleteCardById,
