@@ -21,11 +21,9 @@ function createCard(cardData, cardFunctions, currentUser) {
     likeButton.classList.add("card__like-button_is-active");
   }
   if (cardData.owner._id === currentUser._id) {
-    removeButton.addEventListener("click", () => {
-      cardToDeleteId = cardData._id;
-      cardToDeleteElement = cardItem;
-      openModal(deleteCardPopup);
-    });
+    removeButton.addEventListener("click", () =>
+      cardFunctions.deleteCardCallback(cardData._id, cardItem)
+    );
   } else {
     removeButton.remove();
   }
@@ -34,6 +32,12 @@ function createCard(cardData, cardFunctions, currentUser) {
     cardFunctions.likeCard(cardData._id, event)
   );
   return cardItem;
+}
+
+function deleteCardCallback(cardId, cardItem) {
+  cardToDeleteId = cardId;
+  cardToDeleteElement = cardItem;
+  openModal(deleteCardPopup);
 }
 
 function deleteCard(cardId) {
@@ -73,4 +77,4 @@ function likeCard(cardId, event) {
   }
 }
 
-export { createCard, deleteCard, likeCard, cardToDeleteId };
+export { createCard, deleteCard, likeCard, deleteCardCallback, cardToDeleteId };

@@ -4,6 +4,7 @@ import {
   deleteCard,
   likeCard,
   cardToDeleteId,
+  deleteCardCallback,
 } from "./components/card.js";
 import {
   openModal,
@@ -81,6 +82,7 @@ function renderCard(item, method = "prepend", currentUser) {
       deleteCard,
       likeCard,
       openImagePopup,
+      deleteCardCallback,
     },
     currentUser
   );
@@ -193,15 +195,9 @@ profileAddBtn.addEventListener("click", () => {
 
 deleteConfirmButton.addEventListener("click", handleCardDeleteSubmit);
 
-profileForm.addEventListener("submit", (evt) => {
-  handleProfileFormSubmit(evt);
-});
-formImgElement.addEventListener("submit", (evt) => {
-  handleCardFormSubmit(evt);
-});
-formAvatarElement.addEventListener("submit", (evt) => {
-  handleAvatarFormSubmit(evt);
-});
+profileForm.addEventListener("submit", handleProfileFormSubmit);
+formImgElement.addEventListener("submit", handleCardFormSubmit);
+formAvatarElement.addEventListener("submit", handleAvatarFormSubmit);
 
 enableValidation(validationSettings);
 closeOnClick(closePopupButtons);
